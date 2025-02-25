@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "amirhossein",
+      "username": "amirsw2002",
+      "crime": 0,
+      "role": "ADMIN"
+    },
+    {
+      "id": 2,
+      "name": "hesam",
+      "username": "ahm79",
+      "crime": 0,
+      "role": "USER"
+    },
+    {
+      "id": 3,
+      "name": "saeed",
+      "username": "sa26",
+      "crime": 0,
+      "role": "USER"
+    }
+  ],
+  "books": [
+    {
+      "id": 1,
+      "title": "Golestan",
+      "author": "Sadi",
+      "price": 230000,
+      "free": 0
+    }
+  ]
+}

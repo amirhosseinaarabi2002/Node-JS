@@ -1,15 +1,14 @@
 {
   "name": "node-js",
   "version": "1.0.0",
-  "description": "",
+  "description": "library managment with test data-base",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node server.js",
-    "start": "node httpServer.js"
+    "dev": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "amirhossein aarabi software engineer",
   "license": "ISC",
   "type": "commonjs"
 }
