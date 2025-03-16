@@ -2,24 +2,41 @@
   "users": [
     {
       "id": 1,
-      "name": "amirhossein",
-      "username": "amirsw2002",
+      "name": "Amin Saeedi",
+      "username": "01010101",
+      "email": "test@gmail.com",
       "crime": 0,
       "role": "ADMIN"
     },
     {
       "id": 2,
-      "name": "hesam",
-      "username": "ahm79",
+      "name": "Qadir Yolme",
+      "username": "Q_Yolme",
+      "email": "test@gmail.com",
       "crime": 0,
-      "role": "USER"
+      "role": "ADMIN"
     },
     {
       "id": 3,
-      "name": "saeed",
-      "username": "sa26",
-      "crime": 0,
+      "name": "Ehsan Mmdi",
+      "username": "ehs",
+      "email": "test@gmail.com",
+      "crime": 20000,
       "role": "USER"
+    },
+    {
+      "id": "ad74d8f6-3e15-44ac-841b-9437e87bb913",
+      "name": "ali",
+      "username": "ali_mmdi",
+      "email": "ali@gmail.com",
+      "crime": 0
+    },
+    {
+      "id": "72c89eed-66e3-4480-abbf-4a36bf1021e5",
+      "name": "mohammad",
+      "username": "amir_mohammadi",
+      "email": "mmd@gmail.com",
+      "crime": 0
     }
   ],
   "books": [
@@ -29,6 +46,13 @@
       "author": "Sadi",
       "price": 230000,
       "free": 0
+    },
+    {
+      "id": 2,
+      "title": "Nodejs Book",
+      "author": "Person 1",
+      "price": 200000,
+      "free": 1
     }
   ]
 }

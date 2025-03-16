@@ -12,7 +12,7 @@ const server = http.createServer((req, res) => {
 
       const data = JSON.parse(db);
 
-      res.writeHead(200, { "content-type": "application/json" });
+      res.writeHead(200, { "Content-Type": "application/json" });
       res.write(JSON.stringify(data.users));
       res.end();
     });
@@ -24,7 +24,7 @@ const server = http.createServer((req, res) => {
 
       const data = JSON.parse(db);
 
-      res.writeHead(200, { "content-type": "application/json" });
+      res.writeHead(200, { "Content-Type": "application/json" });
       res.write(JSON.stringify(data.books));
       res.end();
     });
@@ -35,8 +35,8 @@ const server = http.createServer((req, res) => {
     const newBooks = db.books.filter((book) => book.id != bookID);
 
     if (newBooks.length === db.books.length) {
-      res.writeHead(400, { "content-type": "application/json" });
-      res.write(JSON.stringify({ message: "not found" }));
+      res.writeHead(401, { "Content-Type": "application/json" });
+      res.write(JSON.stringify({ message: "Book Not Found" }));
       res.end();
     } else {
       fs.writeFile(
@@ -61,27 +61,129 @@ const server = http.createServer((req, res) => {
     });
 
     req.on("end", () => {
-      const newBook = {
-        id: crypto.randomUUID(),
-        ...JSON.parse(book),
-        free: 1,
-      };
+      const newBook = { id: crypto.randomUUID(), ...JSON.parse(book), free: 1 };
 
       db.books.push(newBook);
 
-      res.writeFile("db.json", JSON.stringify(db), (err) => {
+      fs.writeFile("db.json", JSON.stringify(db), (err) => {
         if (err) {
           throw err;
         }
 
-        res.writeHead(201, { "content-type": "application/json" });
-        res.write(JSON.stringify({ message: "books added" }));
+        res.writeHead(201, { "Content-Type": "application/json" });
+        res.write(JSON.stringify({ message: "New Book Added Successfully" }));
+        res.end();
+      });
+    });
+  } else if (req.method === "PUT" && req.url.startsWith("/api/books")) {
+    const parsedUrl = url.parse(req.url, true);
+    const bookID = parsedUrl.query.id;
+
+    let bookNewInfos = "";
+
+    req.on("data", (data) => {
+      bookNewInfos = bookNewInfos + data.toString();
+    });
+
+    req.on("end", () => {
+      const reqBody = JSON.parse(bookNewInfos);
+
+      db.books.forEach((book) => {
+        if (book.id === Number(bookID)) {
+          book.title = reqBody.title;
+          book.author = reqBody.author;
+          book.price = reqBody.price;
+        }
+      });
+
+      fs.writeFile("./db.json", JSON.stringify(db), (err) => {
+        if (err) {
+          throw err;
+        }
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.write(JSON.stringify({ message: "Book Updated Successfully" }));
+        res.end();
+      });
+    });
+  } else if (req.method === "POST" && req.url === "/api/users") {
+    let user = "";
+
+    req.on("data", (data) => {
+      user = user + data.toString();
+    });
+
+    req.on("end", () => {
+      const { name, username, email } = JSON.parse(user);
+
+      const isUserExist = db.users.find(
+        (user) => user.email === email || user.username === username
+      );
+
+      if (name === "" || username === "" || email === "") {
+        res.writeHead(422, { "Content-Type": "application/json" });
+        res.write(JSON.stringify({ message: "user data are not valid" }));
+        res.end();
+      } else if (isUserExist) {
+        res.writeHead(409, { "Content-Type": "application/json" });
+        res.write(
+          JSON.stringify({ message: "username and email already exist" })
+        );
+        res.end();
+      } else {
+        const newUser = {
+          id: crypto.randomUUID(),
+          name,
+          username,
+          email,
+          crime: 0,
+        };
+        
+        db.users.push(newUser);
+
+        fs.writeFile("./db.json", JSON.stringify(db), (err) => {
+          if (err) {
+            throw err;
+          }
+        });
+        res.writeHead(201, { "Content-Type": "application/json" });
+        res.write(
+          JSON.stringify({ message: "New User Registered Successfully" })
+        );
+        res.end();
+      }
+    });
+  } else if (req.method === "PUT" && req.url.startsWith("/api/users")) {
+    const parsedUrl = url.parse(req.url, true);
+    const userID = parsedUrl.query.id;
+
+    let reqBody = "";
+
+    req.on("data", (data) => {
+      reqBody = reqBody + data.toString();
+    });
+
+    req.on("end", () => {
+      const { crime } = JSON.parse(reqBody);
+
+      db.users.forEach((user) => {
+        if (user.id === Number(userID)) {
+          user.crime = crime;
+        }
+      });
+
+      fs.writeFile("./db.json", JSON.stringify(db), (err) => {
+        if (err) {
+          throw err;
+        }
+
+        res.writeHead(200, { "content-type": "application/json" });
+        res.write(JSON.stringify({ message: "crimes updated" }));
         res.end();
       });
     });
   }
 });
 
-server.listen(3001, () => {
-  console.log("server is running");
+server.listen(4000, () => {
+  console.log("Server Running On Port 4000");
 });
