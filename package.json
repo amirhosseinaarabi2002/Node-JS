@@ -5,10 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node server.js"
+    "dev": "node configs/db.js"
   },
   "keywords": [],
   "author": "amirhossein aarabi software engineer",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "mongodb": "^6.17.0"
+  }
 }
