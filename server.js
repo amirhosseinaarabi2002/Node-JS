@@ -2,6 +2,8 @@ const http = require("http");
 const fs = require("fs");
 const url = require("url");
 const db = require("./db.json");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const bookController = require("./controllers/bookController");
 
@@ -258,6 +260,6 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(27017, () => {
-  console.log("Server Running On Port 4000");
+server.listen(process.env.PORT, () => {
+  console.log(`Server Running On Port ${process.env.PORT}`);
 });
