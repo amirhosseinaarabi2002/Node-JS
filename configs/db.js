@@ -80,10 +80,25 @@ const main = async () => {
 
   // console.log(deleteResult);
 
-  // const result = (await rentCollection).updateOne({ bookID: 1 }, {
+  // const result = (await rentCollection).updateOne({ _id: new ObjectId("6880a2787fc3d539bc94c5c6") }, {
   //   $set: {
   //     bookID: 5
-  //   }
+  //   },
+  //   $unset: {
+  //     score: 40
+  //   },
+  //   $inc: {
+  //     score: 5
+  //   },
+  //   $min: {
+  //     score: 15
+  //   },
+  //   $max: {
+  //     score: 35
+  //   },
+  //   $mul: {
+  //     score: 3
+  //   },
   // })
 
   // const result = (await rentCollection).updateMany({ bookID: 5 }, {
@@ -153,6 +168,61 @@ const main = async () => {
   // const removeData = db.dropDatabase();
 
   // console.log(result);
+
+  // const result = await usersCollection.find({ address: { $exists: true } }).toArray();
+
+  // const result = usersCollection.updateMany({
+  //   createdAt: {$exists: false}
+  //   // updatedAt: {$exists: false}
+  // }, {
+  //   $currentDate: {
+  //     createdAt: true
+  //   }
+
+  //   // $set: {
+  //   //   updatedAt: new Date()
+  //   // }
+  // })
+
+  // const result = usersCollection
+  //   .find({
+  // experience: "flutter"
+  // experience: ["flutter"]
+  // experience: {
+  //   $all: ["node js", "next js", "flutter"],
+  // },
+  // experience: {
+  //   $size: 5,
+  // },
+  // })
+  // .toArray();
+
+  // const result = await usersCollection.updateOne({_id: new ObjectId("68888489555bc205ef277197")},{
+  // $push: {
+  //   experience: "mongo DB"
+  // }
+  // $addToSet: {
+  //   experience: "mongo"
+  // }
+  // $pop: {
+  //   experience: -1
+  // }
+  // $pull: {
+  //   experience: "mongo"
+  // }
+  // })
+
+  // const result = await usersCollection.countDocuments({
+  //   crime: {$gt: 0}
+  // })
+
+  // const result = await usersCollection.find({}).limit(2).toArray()
+  // const result = await usersCollection.find({}).sort({ _id: -1 }).toArray() // 1 or -1 || new to old
+  const result = await usersCollection
+    .find({ email: { $regex: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/g } })
+    .toArray(); // 1 or -1 || new to old
+
+  console.log(result);
 
   return "Done";
 };
