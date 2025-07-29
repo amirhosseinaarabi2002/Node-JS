@@ -4,227 +4,238 @@ require("dotenv").config();
 const dbConnection = new MongoClient(process.env.dbConnectionUrl);
 const dbName = process.env.dbName;
 
-const main = async () => {
-  await dbConnection.connect();
-  console.log("Connected To DBConnection Successfully :))");
+// const main = async () => {
+//   await dbConnection.connect();
+//   console.log("Connected To DBConnection Successfully :))");
 
-  const db = dbConnection.db(dbName);
+//   const db = dbConnection.db(dbName);
 
-  const usersCollection = db.collection("users");
-  // const noCrimeUsers = await usersCollection.find({ crime: 0 }).toArray();
+// const usersCollection = db.collection("users");
+// const noCrimeUsers = await usersCollection.find({ crime: 0 }).toArray();
 
-  // const mainUser = await usersCollection.findOne({
-  //   _id: new ObjectId("688096aedda3609929c05cfa"),
-  // });
+// const mainUser = await usersCollection.findOne({
+//   _id: new ObjectId("688096aedda3609929c05cfa"),
+// });
 
-  // const allUsers = await usersCollection.find({}).toArray();
+// const allUsers = await usersCollection.find({}).toArray();
 
-  // const userInfo = await usersCollection.findOne({
-  //   username: "Q_Yolme",
-  //   role: "ADMIN",
-  // });
+// const userInfo = await usersCollection.findOne({
+//   username: "Q_Yolme",
+//   role: "ADMIN",
+// });
 
-  // console.log(noCrimeUsers);
-  // console.log(mainUser);
-  // console.log(allUsers);
-  // console.log(userInfo);
+// console.log(noCrimeUsers);
+// console.log(mainUser);
+// console.log(allUsers);
+// console.log(userInfo);
 
-  // usersCollection.insertMany([
-  //   {
-  //     name: "Qadir Yolme",
-  //     username: "Q_Yolme",
-  //     email: "test@gmail.com",
-  //     crime: 0,
-  //     role: "ADMIN",
-  //   },
-  //   {
-  //     name: "Amin Saeedi",
-  //     username: "01010101",
-  //     email: "test@gmail.com",
-  //     crime: 0,
-  //     role: "ADMIN",
-  //   },
-  //   {
-  //     name: "Ehsan Mmdi",
-  //     username: "ehs",
-  //     email: "test@gmail.com",
-  //     crime: 90000,
-  //     role: "ADMIN",
-  //   },
-  // ]);
+// usersCollection.insertMany([
+//   {
+//     name: "Qadir Yolme",
+//     username: "Q_Yolme",
+//     email: "test@gmail.com",
+//     crime: 0,
+//     role: "ADMIN",
+//   },
+//   {
+//     name: "Amin Saeedi",
+//     username: "01010101",
+//     email: "test@gmail.com",
+//     crime: 0,
+//     role: "ADMIN",
+//   },
+//   {
+//     name: "Ehsan Mmdi",
+//     username: "ehs",
+//     email: "test@gmail.com",
+//     crime: 90000,
+//     role: "ADMIN",
+//   },
+// ]);
 
-  const booksCollection = db.collection("books");
-  // await booksCollection.insertOne({
-  //   title: "Nodejs Book",
-  //   author: "Person 1",
-  //   price: 200000,
-  //   free: 0,
-  // });
+// const booksCollection = db.collection("books");
+// await booksCollection.insertOne({
+//   title: "Nodejs Book",
+//   author: "Person 1",
+//   price: 200000,
+//   free: 0,
+// });
 
-  const rentCollection = db.createCollection("rents");
-  // (await rentCollection).insertMany([
-  //   { userID: 1, bookID: 1 },
-  //   {
-  //     userID: "fc9b7cd0-173c-4f5f-9bc8-ec9c062d7379",
-  //     bookID: 2,
-  //   },
-  // ]);
+// const rentCollection = db.createCollection("rents");
+// (await rentCollection).insertMany([
+//   { userID: 1, bookID: 1 },
+//   {
+//     userID: "fc9b7cd0-173c-4f5f-9bc8-ec9c062d7379",
+//     bookID: 2,
+//   },
+// ]);
 
-  // const deleteResult = (await rentCollection).deleteOne({
-  //   _id: new ObjectId("6880a070b3dfe816e7d2aa2c"),
-  // });
-  // const deleteResult = (await rentCollection).findOneAndDelete({
-  //   _id: new ObjectId("6880a070b3dfe816e7d2aa2b"),
-  // });
-  // const deleteResult = (await rentCollection).deleteMany({ bookID: 2 });
+// const deleteResult = (await rentCollection).deleteOne({
+//   _id: new ObjectId("6880a070b3dfe816e7d2aa2c"),
+// });
+// const deleteResult = (await rentCollection).findOneAndDelete({
+//   _id: new ObjectId("6880a070b3dfe816e7d2aa2b"),
+// });
+// const deleteResult = (await rentCollection).deleteMany({ bookID: 2 });
 
-  // console.log(deleteResult);
+// console.log(deleteResult);
 
-  // const result = (await rentCollection).updateOne({ _id: new ObjectId("6880a2787fc3d539bc94c5c6") }, {
-  //   $set: {
-  //     bookID: 5
-  //   },
-  //   $unset: {
-  //     score: 40
-  //   },
-  //   $inc: {
-  //     score: 5
-  //   },
-  //   $min: {
-  //     score: 15
-  //   },
-  //   $max: {
-  //     score: 35
-  //   },
-  //   $mul: {
-  //     score: 3
-  //   },
-  // })
+// const result = (await rentCollection).updateOne({ _id: new ObjectId("6880a2787fc3d539bc94c5c6") }, {
+//   $set: {
+//     bookID: 5
+//   },
+//   $unset: {
+//     score: 40
+//   },
+//   $inc: {
+//     score: 5
+//   },
+//   $min: {
+//     score: 15
+//   },
+//   $max: {
+//     score: 35
+//   },
+//   $mul: {
+//     score: 3
+//   },
+// })
 
-  // const result = (await rentCollection).updateMany({ bookID: 5 }, {
-  //   $set: {
-  //     bookID: 5,
-  //     userID: 10
-  //   }
-  // })
+// const result = (await rentCollection).updateMany({ bookID: 5 }, {
+//   $set: {
+//     bookID: 5,
+//     userID: 10
+//   }
+// })
 
-  // const result = (await rentCollection).findOneAndUpdate({ _id: new ObjectId("6880a27bbfb4b8471644c5b5") }, {
-  //   $set: {
-  //     bookID: 7,
-  //     userID: 11
-  //   }
-  // })
+// const result = (await rentCollection).findOneAndUpdate({ _id: new ObjectId("6880a27bbfb4b8471644c5b5") }, {
+//   $set: {
+//     bookID: 7,
+//     userID: 11
+//   }
+// })
 
-  // const result = (await rentCollection).replaceOne({ userID: 10 }, {
-  //   score: 20
-  // })
+// const result = (await rentCollection).replaceOne({ userID: 10 }, {
+//   score: 20
+// })
 
-  // const result = (await rentCollection).findOneAndReplace({ score: 20 }, {
-  //   score: 30,
-  //   userID: 3,
-  //   bookID: 2
-  // })
+// const result = (await rentCollection).findOneAndReplace({ score: 20 }, {
+//   score: 30,
+//   userID: 3,
+//   bookID: 2
+// })
 
-  // const result = await usersCollection.insertOne({
-  //   name: "ali",
-  //   username: "ali_mmdi",
-  //   email: "ali@gmail.com",
-  //   crime: 0,
-  //   role: "USER",
-  //   exprience: ["node js", "next js", "flutter"],
-  //   location: {
-  //     city: "tehran",
-  //     workplace: "vada"
-  //   }
-  // });
+// const result = await usersCollection.insertOne({
+//   name: "ali",
+//   username: "ali_mmdi",
+//   email: "ali@gmail.com",
+//   crime: 0,
+//   role: "USER",
+//   exprience: ["node js", "next js", "flutter"],
+//   location: {
+//     city: "tehran",
+//     workplace: "vada"
+//   }
+// });
 
-  // const userList = usersCollection.findOne({ _id: new ObjectId("6880c96dd65572c9cdd64f0d") })
+// const userList = usersCollection.findOne({ _id: new ObjectId("6880c96dd65572c9cdd64f0d") })
 
-  // console.log(userList.location);
+// console.log(userList.location);
 
-  const operators = await usersCollection
-    .find({
-      // role: { $ne: "USER" },
-      // role: { $eq: "USER" },
-      // crime: { $lt: 7000 },
-      // crime: { $lte: 90000 },
-      // crime: { $gt: 0 },
-      // crime: { $gte: 0 },
-      // name: { $in: ["ali", "Qadir Yolme"] },
-      // name: { $nin: ["ali", "Qadir Yolme"] },
+// const operators = await usersCollection
+//   .find({
+//     // role: { $ne: "USER" },
+//     // role: { $eq: "USER" },
+//     // crime: { $lt: 7000 },
+//     // crime: { $lte: 90000 },
+//     // crime: { $gt: 0 },
+//     // crime: { $gte: 0 },
+//     // name: { $in: ["ali", "Qadir Yolme"] },
+//     // name: { $nin: ["ali", "Qadir Yolme"] },
 
-      $or: [{ name: { $in: ["ali", "Qadir Yolme"] } }, { crime: { $gt: 0 } }],
-    })
-    .toArray();
+//     $or: [{ name: { $in: ["ali", "Qadir Yolme"] } }, { crime: { $gt: 0 } }],
+//   })
+//   .toArray();
 
-  // const deleteItem = usersCollection.deleteOne({
-  //   "location.city": "tehran",
-  // });
+// const deleteItem = usersCollection.deleteOne({
+//   "location.city": "tehran",
+// });
 
-  // const removeCollection = await booksCollection.drop();
-  // const removeCollection = await db.collection("books").drop();
-  // const removeCollection = await db.dropCollection("books");
+// const removeCollection = await booksCollection.drop();
+// const removeCollection = await db.collection("books").drop();
+// const removeCollection = await db.dropCollection("books");
 
-  // const removeData = db.dropDatabase();
+// const removeData = db.dropDatabase();
 
-  // console.log(result);
+// console.log(result);
 
-  // const result = await usersCollection.find({ address: { $exists: true } }).toArray();
+// const result = await usersCollection.find({ address: { $exists: true } }).toArray();
 
-  // const result = usersCollection.updateMany({
-  //   createdAt: {$exists: false}
-  //   // updatedAt: {$exists: false}
-  // }, {
-  //   $currentDate: {
-  //     createdAt: true
-  //   }
+// const result = usersCollection.updateMany({
+//   createdAt: {$exists: false}
+//   // updatedAt: {$exists: false}
+// }, {
+//   $currentDate: {
+//     createdAt: true
+//   }
 
-  //   // $set: {
-  //   //   updatedAt: new Date()
-  //   // }
-  // })
+//   // $set: {
+//   //   updatedAt: new Date()
+//   // }
+// })
 
-  // const result = usersCollection
-  //   .find({
-  // experience: "flutter"
-  // experience: ["flutter"]
-  // experience: {
-  //   $all: ["node js", "next js", "flutter"],
-  // },
-  // experience: {
-  //   $size: 5,
-  // },
-  // })
-  // .toArray();
+// const result = usersCollection
+//   .find({
+// experience: "flutter"
+// experience: ["flutter"]
+// experience: {
+//   $all: ["node js", "next js", "flutter"],
+// },
+// experience: {
+//   $size: 5,
+// },
+// })
+// .toArray();
 
-  // const result = await usersCollection.updateOne({_id: new ObjectId("68888489555bc205ef277197")},{
-  // $push: {
-  //   experience: "mongo DB"
-  // }
-  // $addToSet: {
-  //   experience: "mongo"
-  // }
-  // $pop: {
-  //   experience: -1
-  // }
-  // $pull: {
-  //   experience: "mongo"
-  // }
-  // })
+// const result = await usersCollection.updateOne({_id: new ObjectId("68888489555bc205ef277197")},{
+// $push: {
+//   experience: "mongo DB"
+// }
+// $addToSet: {
+//   experience: "mongo"
+// }
+// $pop: {
+//   experience: -1
+// }
+// $pull: {
+//   experience: "mongo"
+// }
+// })
 
-  // const result = await usersCollection.countDocuments({
-  //   crime: {$gt: 0}
-  // })
+// const result = await usersCollection.countDocuments({
+//   crime: {$gt: 0}
+// })
 
-  // const result = await usersCollection.find({}).limit(2).toArray()
-  // const result = await usersCollection.find({}).sort({ _id: -1 }).toArray() // 1 or -1 || new to old
-  const result = await usersCollection
-    .find({ email: { $regex: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/g } })
-    .toArray(); // 1 or -1 || new to old
+// const result = await usersCollection.find({}).limit(2).toArray()
+// const result = await usersCollection.find({}).sort({ _id: -1 }).toArray() // 1 or -1 || new to old
+// const result = await usersCollection
+//   .find({ email: { $regex: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/g } })
+//   .toArray(); // 1 or -1 || new to old
 
-  console.log(result);
+// console.log(result);
 
-  return "Done";
+//   return "Done";
+// };
+
+// main();
+
+module.exports = {
+  dbConnection: async () => {
+    await dbConnection.connect();
+    console.log("Connected To DBConnection Successfully :))");
+
+    const db = dbConnection.db(dbName);
+
+    return db;
+  },
 };
-
-main();

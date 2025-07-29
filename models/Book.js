@@ -1,32 +1,26 @@
 const fs = require("fs");
-const db = require("./../db.json");
+const { dbConnection } = require("../configs/db");
+const { ObjectId } = require("mongodb");
 
-const find = () => {
-  return new Promise((resolve, reject) => {
-    resolve(db.books);
-  });
+const find = async () => {
+  const db = await dbConnection();
+  const booksCollection = db.collection("books");
+  const books = booksCollection.find({}).toArray();
+
+  return books;
 };
 
-const remove = (bookID) => {
-  return new Promise((resolve, reject) => {
-    const newBooks = db.books.filter((book) => book.id !== Number(bookID));
+const remove = async (bookID) => {
+  const db = await dbConnection();
+  const booksCollection = db.collection("books");
+  const result = await booksCollection.deleteOne({ _id: new ObjectId(bookID) });
 
-    if (newBooks.length === db.books.length) {
-      reject({ message: "Book Not Found" });
-    } else {
-      fs.writeFile(
-        `${process.cwd()}/db.json`,
-        JSON.stringify({ ...db, books: newBooks }),
-        (err) => {
-          if (err) {
-            reject(err);
-          }
+  if (result.deletedCount) {
+    return { message: "Book Removed Successfully" };
+  } else {
+    return { message: "Book Not Found" };
+  }
 
-          resolve({ message: "Book Removed Successfully" });
-        }
-      );
-    }
-  });
 };
 
 module.exports = {
