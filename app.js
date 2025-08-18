@@ -1,10 +1,12 @@
 const express = require("express");
-const usersModel = require("./models/users");
 // const bodyParser = require("body-parser");
-const registerValidator = require("./validators/register");
-require("./configs/db")
+const usersRouter = require("./routes/users");
+const booksRouter = require("./routes/books");
+require("./configs/db");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 
@@ -71,29 +73,16 @@ const port = 4000;
 //   });
 // });
 
-app.post("/api/users", async (req, res) => {
+// app.get("/test/:id", (req, res) => {
+//   const { id } = req.params;
+//   console.log(id);
 
-  const validationResult = registerValidator(req.body);
-  
-    if (validationResult !== true) {
-      return res.status(422).json(validationResult);
-    }
+//   // res.send(isValidObjectId(id));
+//   res.send(mongoose.Types.ObjectId.isValid(id));
+// });
 
-   let { name, username, email, age, password } = req.body;
-  
-    const result = await usersModel.create({
-      name,
-      email,
-      username,
-      age,
-      password,
-    });
-  
-    res.status(201).json({
-      message: "New user create successfully",
-      result,
-    });
-});
+app.use("/api/users/", usersRouter);
+app.use("/api/books/", booksRouter);
 
-app.get("/", (req, res) => res.send("Hello World!"));
+// app.get("/", (req, res) => res.send("Hello World!"));
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

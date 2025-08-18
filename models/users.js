@@ -10,11 +10,12 @@ const usersModel = mongoose.model("users", {
   username: {
     type: String,
     required: true,
-    minLength: 8,
+    minLength: 5,
     maxLength: 15,
   },
   email: {
     type: String,
+
   },
   password: {
     type: String,
