@@ -17,12 +17,6 @@ const booksModel = mongoose.model("books", {
     type: Number,
     min: 10000,
   },
-  password: {
-    type: String,
-    required: true,
-    minLength: 8,
-    maxLength: 12,
-  },
   free: {
     type: Number,
     default: 1,

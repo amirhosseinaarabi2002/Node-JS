@@ -2,6 +2,7 @@ const express = require("express");
 // const bodyParser = require("body-parser");
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
+// const { testMiddleware } = require("./middlewares/test");
 require("./configs/db");
 const cors = require("cors");
 
@@ -9,6 +10,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
+
+// app.use((req, res, next) => {
+//   console.log("first middleware");
+//   next();
+// });
+
+// app.use(testMiddleware); // global middleware
 
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
@@ -80,6 +88,20 @@ const port = 4000;
 //   // res.send(isValidObjectId(id));
 //   res.send(mongoose.Types.ObjectId.isValid(id));
 // });
+
+// app.get(
+//   "/api/virgool",
+//   testMiddleware, // local middleware
+//   (req, res, next) => {
+//     console.log("second middleware");
+//     next();
+//   },
+//   (req, res) => {
+//     res.json({
+//       message: "virgool published!",
+//     });
+//   }
+// );
 
 app.use("/api/users/", usersRouter);
 app.use("/api/books/", booksRouter);
