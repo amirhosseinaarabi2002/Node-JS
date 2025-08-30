@@ -2,6 +2,8 @@ const { isValidObjectId } = require("mongoose");
 const booksModel = require("../models/books");
 
 exports.getAll = async (req, res) => {
+  // console.log(req.user)
+  // console.log(req.query)
   const books = await booksModel.find({}).lean();
   res.json(books);
 };

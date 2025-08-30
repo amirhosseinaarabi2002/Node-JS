@@ -1,0 +1,73 @@
+{
+  "name": "omit-empty",
+  "description": "Recursively omit empty properties from an object. Omits empty objects, arrays, strings or zero.",
+  "version": "1.0.0",
+  "homepage": "https://github.com/jonschlinkert/omit-empty",
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "repository": "jonschlinkert/omit-empty",
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/omit-empty/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "kind-of": "^6.0.2"
+  },
+  "devDependencies": {
+    "gulp-format-md": "^2.0.0",
+    "mocha": "^5.2.0"
+  },
+  "keywords": [
+    "clear",
+    "delete",
+    "empty",
+    "find",
+    "has",
+    "hasown",
+    "javascript",
+    "js",
+    "key",
+    "keys",
+    "node",
+    "node-js",
+    "object",
+    "omit",
+    "properties",
+    "property",
+    "remove",
+    "util",
+    "utilities",
+    "utility",
+    "value"
+  ],
+  "verb": {
+    "run": true,
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "related": {
+      "list": [
+        "is-plain-object",
+        "isobject",
+        "kind-of"
+      ]
+    },
+    "lint": {
+      "reflinks": true
+    }
+  }
+}

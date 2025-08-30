@@ -4,6 +4,7 @@ module.exports = async(req, res, next) => {
     const { id } = req.body
 
     const user = await usersModel.findOne({ _id: id }).lean()
+    req.user = user
 
     if(user) {
         if(user.role === "ADMIN") {

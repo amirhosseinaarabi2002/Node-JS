@@ -1,13 +1,35 @@
 const express = require("express");
+const morgan = require("morgan");
+const omitEmpty = require("omit-empty");
+const helmet = require("helmet");
+const path = require("path");
+// const camelCaseMain = (...args) =>
+//   import("camelcase-keys").then(({ default: camelcase }) => camelcase(args));
 // const bodyParser = require("body-parser");
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
+const teacherRouter = require("./routes/teacher");
+const coursesRouter = require("./routes/course")
+const viewPath = require("./helper/path");
 // const { testMiddleware } = require("./middlewares/test");
 require("./configs/db");
 const cors = require("cors");
 
 const app = express();
+// const camelcase = async (req, res, next) => {
+//   req.body = await camelCaseMain(req.body);
+//   req.params = await camelCaseMain(req.params);
+//   req.query = await camelCaseMain(req.query);
+
+//   console.log(req.body);
+//   console.log(req.params);
+//   console.log(req.query);
+
+//   next();
+// };
+// app.use(camelcase())
 app.use(cors());
+app.use(morgan("combined"));
 app.use(express.json());
 app.use(express.urlencoded());
 
@@ -103,8 +125,45 @@ const port = 4000;
 //   }
 // );
 
+// console.log(
+//   omitEmpty(
+//     {
+//       name: "amir",
+//       pass: "",
+//       score: 0,
+//     },
+//     {
+//       omitZero: true,
+//     }
+//   )
+// );
+
+const removeEmpty = async (req, res, next) => {
+  req.body = await omitEmpty(req.body, { omitZero: true });
+  console.log(req.body);
+  next();
+};
+app.use(removeEmpty);
+
+app.use(helmet());
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(viewPath, "index.html"));
+});
+
+app.use(express.static(path.join(__dirname, "public")));
+
 app.use("/api/users/", usersRouter);
 app.use("/api/books/", booksRouter);
+app.use("/api/teacher/", teacherRouter);
+app.use("/api/courses/", coursesRouter);
+
+app.use((req, res) => {
+  // return res.status(404).sendFile(path.join(viewPath, "404.html"))
+  return res.status(404).json({
+    message: "page not found!",
+  });
+});
 
 // app.get("/", (req, res) => res.send("Hello World!"));
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
