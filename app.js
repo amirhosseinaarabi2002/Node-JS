@@ -3,17 +3,24 @@ const morgan = require("morgan");
 const omitEmpty = require("omit-empty");
 const helmet = require("helmet");
 const path = require("path");
+// const multer = require("multer");
+const bcrypt = require("bcrypt");
+
 // const camelCaseMain = (...args) =>
 //   import("camelcase-keys").then(({ default: camelcase }) => camelcase(args));
 // const bodyParser = require("body-parser");
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
 const teacherRouter = require("./routes/teacher");
-const coursesRouter = require("./routes/course")
+const coursesRouter = require("./routes/course");
+const uploader = require("./middlewares/multer")
 const viewPath = require("./helper/path");
 // const { testMiddleware } = require("./middlewares/test");
 require("./configs/db");
 const cors = require("cors");
+const coursesModel = require("./models/courses");
+
+// const upload = multer({dest: "uploads/"});
 
 const app = express();
 // const camelcase = async (req, res, next) => {
@@ -157,6 +164,53 @@ app.use("/api/users/", usersRouter);
 app.use("/api/books/", booksRouter);
 app.use("/api/teacher/", teacherRouter);
 app.use("/api/courses/", coursesRouter);
+
+app.get("/", async (req, res) => {
+  // const teacher = await teacherModel.findOne({
+  //   _id: "64be977e32a05a186b72efdb",
+  // });
+
+  // coursesModel.create({
+  //   title: "Mern Stack",
+  //   teacher: teacher,
+  // });
+
+  // res.json({
+  //   message: "New course added successfully :))",
+  // });
+
+  await coursesModel.findOneAndUpdate(
+    { _id: "64beaee3e4ae2add711c3bbe" },
+    {
+      $set: { comments: [] },
+    }
+  );
+
+  res.json({ message: "Comments addedd successfully" });
+
+  // res.sendFile(path.join(viewsPath, "index.html"));
+});
+
+// app.post("/", uploader.single("profile"), async (req, res) => {
+//   console.log(req.file);
+//   res.json(req.file);
+// });
+app.post("/", uploader.array("profile", 3), async (req, res) => {
+  console.log(req.file);
+  res.json(req.files);
+});
+
+
+const salt = bcrypt.genSaltSync(10)
+console.log(salt)
+
+const hashedPassword = bcrypt.hashSync("amirhossein13811392!@", salt)
+console.log(hashedPassword)
+
+
+const dbHashed = "$2b$10$iz1N0pbVfB2byHaKmwU8rO6M6DfMixppYUonvEgWqy3wiWaGhgL76"
+const isValidPassword = bcrypt.compareSync("amirhossein13811392!@" , dbHashed)
+console.log(isValidPassword)
 
 app.use((req, res) => {
   // return res.status(404).sendFile(path.join(viewPath, "404.html"))

@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 
-const teacherModel = mongoose.model("teacher", {
+const teachersSchema = mongoose.Schema({
   fullname: {
     type: String,
     required: true,
   },
 });
 
-module.exports = teacherModel;
+const teacherModel = mongoose.model("Teacher", teachersSchema);
+
+module.exports = { teachersSchema, teacherModel };
