@@ -5,6 +5,7 @@ const helmet = require("helmet");
 const path = require("path");
 // const multer = require("multer");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 // const camelCaseMain = (...args) =>
 //   import("camelcase-keys").then(({ default: camelcase }) => camelcase(args));
@@ -13,7 +14,7 @@ const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
 const teacherRouter = require("./routes/teacher");
 const coursesRouter = require("./routes/course");
-const uploader = require("./middlewares/multer")
+const uploader = require("./middlewares/multer");
 const viewPath = require("./helper/path");
 // const { testMiddleware } = require("./middlewares/test");
 require("./configs/db");
@@ -200,17 +201,36 @@ app.post("/", uploader.array("profile", 3), async (req, res) => {
   res.json(req.files);
 });
 
+// const salt = bcrypt.genSaltSync(10)
+// console.log(salt)
 
-const salt = bcrypt.genSaltSync(10)
-console.log(salt)
+// const hashedPassword = bcrypt.hashSync("amirhossein13811392!@", salt)
+// console.log(hashedPassword)
 
-const hashedPassword = bcrypt.hashSync("amirhossein13811392!@", salt)
-console.log(hashedPassword)
+// const dbHashed = "$2b$10$iz1N0pbVfB2byHaKmwU8rO6M6DfMixppYUonvEgWqy3wiWaGhgL76"
+// const isValidPassword = bcrypt.compareSync("amirhossein13811392!@" , dbHashed)
+// console.log(isValidPassword)
+
+const secretKey = "ihrgoehgeorigieh4porfwphgpo;gwp;o";
+const accessToken = jwt.sign({ id: 122, email: "amir@gmail.com" }, secretKey, {
+  expiresIn: "10 s",
+});
+// console.log(accessToken)
 
 
-const dbHashed = "$2b$10$iz1N0pbVfB2byHaKmwU8rO6M6DfMixppYUonvEgWqy3wiWaGhgL76"
-const isValidPassword = bcrypt.compareSync("amirhossein13811392!@" , dbHashed)
-console.log(isValidPassword)
+// const decodeData = jwt.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIyLCJlbWFpbCI6ImFtaXJAZ21haWwuY29tIiwiaWF0IjoxNzU2NjQ0MjIwLCJleHAiOjE3NTc1MDgyMjB9.gGdjF-OGHS5oZ6By8pJYLLc0KbXmoghUEVTiAjOUJsg")
+
+// console.log(decodeData.email)
+
+setTimeout(() => {
+  try{
+      const payloadData = jwt.verify(accessToken, secretKey);
+  console.log(payloadData);
+  }catch(error){
+    console.log(error.message)
+  }
+
+}, 12000);
 
 app.use((req, res) => {
   // return res.status(404).sendFile(path.join(viewPath, "404.html"))
